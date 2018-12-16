@@ -21,14 +21,16 @@ for i in f:
     else:
         er = (a2/L)/((1 - b) + (i*h2)/ L)
         er2.append(er)
+
+
 def z(f1):
-	z = 0.1 + 0.85 * (f1-0.2)
-	return z
-	
+    tt = 0.1 + 0.85 * (f1-0.2)
+    return tt
+
+
 def f22(x, ax, hx):
-	f22 = x * L * (1 - b)/(ax - x * hx)
-	return f22
-	
+    c22 = x * L * (1 - b)/(ax - x * hx)
+    return c22
 
 
 # print(er1)
@@ -38,8 +40,8 @@ mpl.rcParams['axes.unicode_minus'] = False
 plt.figure(1)
 plt.plot(f, er1, 'r-', label = '空载')
 plt.plot(f, er2, 'b:', label = '满载')
-plt.scatter(f0, ((L - a2)/L)/(b - (f0*h2)/ L),s = 50, color = 'blue')
-plt.plot([f0,f0], [0, ((L - a2)/L)/(b - (f0*h2)/ L)], 'g--')
+plt.scatter(f0, ((L - a2)/L)/(b - (f0*h2) / L), s=50, color='blue')
+plt.plot([f0,f0], [0, ((L - a2)/L)/(b - (f0*h2) / L)], 'g--')
 plt.xlabel('附着系数',fontsize = 12)
 plt.ylabel('制动效率',fontsize = 12)
 plt.xlim(0, 1)
