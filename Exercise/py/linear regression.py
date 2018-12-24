@@ -13,9 +13,8 @@ from sklearn.preprocessing import PolynomialFeatures
 mpl.rcParams['font.sans-serif'] = ['SimHei']
 mpl.rcParams['axes.unicode_minus'] = False
 plt.rcParams['savefig.dpi'] = 1000  # 保存的图片像素
-
-
 # 制造随机数据
+
 def get_data(N=100, p=1):
     np.random.seed(0)
     x = np.random.uniform(0, 6, size=N).reshape(-1, 1)  # 生成训练用的x
@@ -25,8 +24,6 @@ def get_data(N=100, p=1):
     y = x ** 2 - 4 * x - 3 + np.random.randn(N).reshape(-1, 1)
     y.shape = -1, 1
     return x, x_pred, y, N, p
-
-
 if __name__ == "__main__":
     x, x_pred, y, N, p = get_data(100, 2)  # 获取数据以及相关参数
 
