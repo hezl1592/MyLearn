@@ -47,7 +47,7 @@ plt.ylabel('制动效率', fontsize=12)
 plt.xlim(0, 1)
 plt.ylim(0, 1.1)
 plt.legend(loc='best')  # 开启图示
-plt.show()
+
 
 plt.figure(2)
 plt.plot(np.linspace(0.2, 0.8, 60), z(np.linspace(0.2, 0.8, 60)), 'b-')

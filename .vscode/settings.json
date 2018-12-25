@@ -1,5 +1,14 @@
 {
-    "python.linting.pylintEnabled": true,
+    "editor.fontSize": 16,
+
+    
+    "python.pythonPath": "C:\\Program Files\\Python36\\python.exe",
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true,
     "python.linting.enabled": true,
-    "python.pythonPath": "C:\\Program Files\\Python36\\python.exe"
+    "python.formatting.provider": "autopep8",
+    "python.jediEnabled": false,
+    "explorer.confirmDelete": false,
+    "python.autoComplete.addBrackets": true,
+    "workbench.startupEditor": "welcomePage"
 }
