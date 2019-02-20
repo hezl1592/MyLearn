@@ -19,7 +19,7 @@ with tf.Session() as sess1:
     # 初始化变量
     tf.global_variables_initializer().run()
 
-    # 更新数据
+    # 更新数据，op
     update_weights = tf.assign(wegiht, tf.random_uniform([1, 2], -1.0, 1.0))
     update_total = tf.assign(total, tf.add(total, wegiht))
 
