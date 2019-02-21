@@ -12,8 +12,12 @@ with g.as_default():
 
         sess.run(c)
         print(c.eval())
-        print(c.graph)
+        print('c:', c.graph)
         assert c.graph is g, '...erro'
+
+ab = tf.constant(3.0)
+print('a:', ab.graph)
+
 
 # Constructing and making default:
 with tf.Graph().as_default() as g1:
