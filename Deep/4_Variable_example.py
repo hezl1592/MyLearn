@@ -14,9 +14,13 @@ with tf.Session(config=tf.ConfigProto(log_device_placement=True)) as sess:
 print('-----------分割线---------------')
 
 with tf.Session() as sess1:
-    # 创建两个变量，
+    # 创建两个变量，变量
     total = tf.Variable(tf.zeros([1, 2]))
-    wegiht = tf.Variable(tf.random_uniform([1, 2]))
+    wegiht = tf.Variable(tf.random_normal([1, 2], mean=0.0, stddev=1.0))
+    print(total)
+    print(wegiht)
+    # sess1.run(wegiht)
+    # print(wegiht.eval())
 
     # 初始化变量
     tf.global_variables_initializer().run()

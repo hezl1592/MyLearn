@@ -13,6 +13,7 @@ with tf.Graph().as_default():
     a.set_shape([4, 2])
     print('a.setshape:', a)
 
+    # reshape()
     a_reshape = tf.reshape(a, [1, 8])
     print('a_reshape:', a_reshape)
 
@@ -21,3 +22,17 @@ with tf.Graph().as_default():
 
     with tf.Session() as sess:
         pass
+
+with tf.Session() as sess:
+    w = tf.placeholder(tf.float32, [None, 2])
+    print(w)
+
+    w.set_shape([3, 2])
+    print(w)
+
+    # 静态形状不能跨维度修改形状
+    # w.set_shape([3,2,1])
+    # print(w)
+
+    w1 = tf.reshape(w, [2, 1, 3])
+    print(w1)
