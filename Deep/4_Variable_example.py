@@ -23,17 +23,19 @@ with tf.Session() as sess1:
     # print(wegiht.eval())
 
     # 初始化变量
-    tf.global_variables_initializer().run()
+    init_op = tf.global_variables_initializer()
 
     # 更新数据，op
     update_weights = tf.assign(wegiht, tf.random_uniform([1, 2], -1.0, 1.0))
     update_total = tf.assign(total, tf.add(total, wegiht))
 
     for i in range(5):
+        sess1.run(init_op)
 
         sess1.run(update_weights)
         sess1.run(update_total)
 
         print(wegiht.eval(), total.eval())
-
+    
+    tf.summary.FileWriter('./Deep/', graph=sess1.graph)
     print(sess1.graph)
