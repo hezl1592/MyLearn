@@ -16,8 +16,7 @@ def my_regression():
     y_true = tf.matmul(x, [[0.7]]) + 0.8
 
     # 建立线性回归模型，y=wx+b
-    weight = tf.Variable(tf.random_normal(
-        [1, 1], mean=0, stddev=1.0), name="w")
+    weight = tf.Variable(tf.random_normal([1, 1], mean=0, stddev=1.0), name="w")
     bias = tf.Variable(0.0, name="b")
 
     y_predict = tf.matmul(x, weight) + bias
@@ -25,7 +24,7 @@ def my_regression():
     # 损失函数
     loss = tf.reduce_mean(tf.square(y_true - y_predict))
 
-    # 梯度下降
+    # 梯度下降，学习率
     train_op = tf.train.GradientDescentOptimizer(0.1).minimize(loss)
 
     # 定义一个初始化op
@@ -40,8 +39,7 @@ def my_regression():
         # 循环优化
         for i in range(500):
             sess.run(train_op)
-            print('参数权重：{}，偏置：{}, loss：{}'.format(
-                weight.eval(), bias.eval(), loss.eval()))
+            print('参数权重：{}，偏置：{}, loss：{}'.format(weight.eval(), bias.eval(), loss.eval()))
             if loss.eval() < 1.0e-7:
                 break
         print('训练次数：', i)
