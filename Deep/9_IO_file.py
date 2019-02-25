@@ -10,6 +10,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 # 模拟一下同步先处理数据，然后才能取数据训练
 # 1.首先定义一个队列
 queue1 = tf.FIFOQueue(capacity=3, dtypes=tf.float32)
+queue2 = tf.RandomShuffleQueue()
 
 # 放入一些数据
 # enqueue1 = queue1.enqueue_many([[0.1], [0.2], [0.3]])
