@@ -6,33 +6,45 @@ import os
 
 # 调整警告等级
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-
-# 模拟一下同步先处理数据，然后才能取数据训练
-# 1.首先定义一个队列
-queue1 = tf.FIFOQueue(capacity=3, dtypes=tf.float32)
-queue2 = tf.RandomShuffleQueue()
-
-# 放入一些数据
-# enqueue1 = queue1.enqueue_many([[0.1], [0.2], [0.3]])
-enqueue1 = queue1.enqueue_many([[0.1, 0.2, 0.3], ])
-#
-out_queue = queue1.dequeue()
-data = out_queue + 1
-en_queue = queue1.enqueue(data)
-
-with tf.Session() as sess:
-    # 初始化队列
-    sess.run(enqueue1)
-    # print(sess.run(enqueue1))
-
-    for i in range(100):
-        sess.run(en_queue)
-        # print(sess.run(en_queue))
-
-    for i in range(queue1.size().eval()):
-        # sess.run(queue1.dequeue())
-        print(sess.run(queue1.dequeue()))
+'''
+csv文件读取：
+1. 先找到文件，构造一个列表
+2. 构造文件队列
+3. 构造阅读器，读取队列内容（按行）
+4. 解码内容
+5. 批处理（多样本）
+'''
 
 
+def csvread(file_list):
+    '''
+    读取CSV文件
+    ：parameter filelist:文件路径+名字的列表
+    ：return    读取的内容
+    '''
+    # 1.构建文件的队列
+    file_queue = tf.train.string_input_producer(file_list)
+
+    # 2.构建CSV阅读器
+    reader = tf.TextLineReader()
+    key, value = reader.read(file_queue)
+
+    # 3.对每一行内容进行解码
+    '''
+    record_defaults:参数决定了所得张量的类型，并指定默认值
+                    Acceptable types are `float32`, `float64`, `int32`, `int64`, `string`.
+    '''
+    records = [['apple'], ['jpg'], [4], [2], ['apple'], [22], [22], [22], [22]]
+    example, label = tf.decode_csv(value, record_defaults=records, field_delim=",")
+
+    print(value)
+
+    return None
 
 
+if __name__ == "__main__":
+    file_path = os.path.join(os.getcwd(), 'test_file\\csv_file')
+    file_name = os.listdir(file_path)
+    file_list = [os.path.join(file_path, file) for file in file_name]
+
+    csvread(file_list)
