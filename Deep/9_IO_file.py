@@ -23,7 +23,7 @@ def csvread(file_list):
     ：return    读取的内容
     '''
     # 1.构建文件的队列
-    file_queue = tf.train.string_input_producer(file_list)
+    file_queue = tf.train.string_input_producer(file_list, shuffle=True)
 
     # 2.构建CSV阅读器
     reader = tf.TextLineReader()
@@ -34,12 +34,21 @@ def csvread(file_list):
     record_defaults:参数决定了所得张量的类型，并指定默认值
                     Acceptable types are `float32`, `float64`, `int32`, `int64`, `string`.
     '''
-    records = [['apple'], ['jpg'], [4], [2], ['apple'], [22], [22], [22], [22]]
-    example, label = tf.decode_csv(value, record_defaults=records, field_delim=",")
+    records = [['name'], ['sex'], [160], [60]]
+    # records = [['apple'], ['jpg'], [4], [2], ['apple'], [22], [22], [22], [22]]
 
-    print(value)
+    name, sex, height, weight = tf.decode_csv(
+        value, record_defaults=records, field_delim=",")
+    # name, categr, height, width, label, x1, x2, x3, x4 = tf.decode_csv(value, record_defaults=records, field_delim=",")
 
-    return None
+    # 4.想要读取多个数据， 就需要批处理
+    name_batch,  sex_batch, height_batch, weight_batch = tf.train.batch(
+        [name, sex, height, weight], batch_size=10, num_threads=1, capacity=10)
+
+    # return name, sex, height, weight
+    print(name_batch,  sex_batch, height_batch, weight_batch)
+    return name_batch,  sex_batch, height_batch, weight_batch
+    # return name, categr, height, width, label, x1, x2, x3, x4
 
 
 if __name__ == "__main__":
@@ -47,4 +56,20 @@ if __name__ == "__main__":
     file_name = os.listdir(file_path)
     file_list = [os.path.join(file_path, file) for file in file_name]
 
-    csvread(file_list)
+    name, sex, height, weight = csvread(file_list)
+    # name, categr, height, width, label, x1, x2, x3, x4 = csvread(file_list)
+
+    # 开启会话
+    with tf.Session() as sess:
+        # 定义一个线程协调器
+        coord = tf.train.Coordinator()
+
+        # 开启读文件的线程
+        threads = tf.train.start_queue_runners(sess=sess, coord=coord)
+
+        # 打印读取的内容
+        print(sess.run([name, sex, height, weight]))
+        # print(sess.run([name, categr, height, width, label, x1, x2, x3, x4]))
+
+        coord.request_stop()
+        coord.join(threads=threads)
